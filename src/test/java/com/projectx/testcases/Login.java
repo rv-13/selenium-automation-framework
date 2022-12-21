@@ -27,6 +27,7 @@ public class Login {
         driver.quit();
 
     }
+
     @Test
     public void verifyLoginWithInValidCredentials() {
         WebDriver driver = new ChromeDriver();
@@ -41,7 +42,7 @@ public class Login {
         driver.findElement(By.xpath("//input[@value='Login']")).click();
 
         String actualWarning = driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
-        Assert.assertTrue(true,actualWarning);
+        Assert.assertTrue(true, actualWarning);
         driver.quit();
 
     }
