@@ -7,6 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.Date;
 
 public class Login {
 
@@ -37,7 +38,7 @@ public class Login {
         driver.get("http://www.tutorialsninja.com/demo/");
         driver.findElement(By.xpath("//span[text()='My Account']")).click();
         driver.findElement(By.linkText("Login")).click();
-        driver.findElement(By.id("input-email")).sendKeys("amotooricap9@gmail.com1");
+        driver.findElement(By.id("input-email")).sendKeys("amotooricap"+generateTimeStamp()+"@gmail.com1");
         driver.findElement(By.id("input-password")).sendKeys("123451");
         driver.findElement(By.xpath("//input[@value='Login']")).click();
 
@@ -45,5 +46,10 @@ public class Login {
         Assert.assertTrue(true, actualWarning);
         driver.quit();
 
+    }
+
+    public String generateTimeStamp() {
+        Date date = new Date();
+        return date.toString().replace(" ", "_").replace(":", "_");
     }
 }
