@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
@@ -11,9 +12,16 @@ import java.util.Date;
 
 public class Login {
 
+    WebDriver driver;
+
+    @AfterMethod
+    public void tearDown() {
+        driver.quit();
+    }
+
     @Test
     public void verifyLoginWithValidCredentials() {
-        WebDriver driver = new ChromeDriver();
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
@@ -24,13 +32,11 @@ public class Login {
         driver.findElement(By.id("input-password")).sendKeys("12345");
         driver.findElement(By.xpath("//input[@value='Login']")).click();
         Assert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
-        driver.quit();
-
     }
 
     @Test
     public void verifyLoginWithInValidCredentials() {
-        WebDriver driver = new ChromeDriver();
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
@@ -42,13 +48,11 @@ public class Login {
         driver.findElement(By.xpath("//input[@value='Login']")).click();
         String actualWarning = driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
         Assert.assertTrue(true, actualWarning);
-        driver.quit();
-
     }
 
     @Test
     public void verifyLoginWithoutCredentials() {
-        WebDriver driver = new ChromeDriver();
+        driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
@@ -61,8 +65,6 @@ public class Login {
         String actualWarningMessage = driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
         String expectedWarningMessage = "Warning: No match for E-Mail Address and/or Password.";
         Assert.assertTrue(actualWarningMessage.contains(expectedWarningMessage), "Warning: No match for E-Mail Address and/or Password.");
-        driver.quit();
-
     }
 
     public String generateTimeStamp() {
