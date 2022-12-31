@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
@@ -14,13 +15,8 @@ public class Login {
 
     WebDriver driver;
 
-    @AfterMethod
-    public void tearDown() {
-        driver.quit();
-    }
-
-    @Test
-    public void verifyLoginWithValidCredentials() {
+    @BeforeMethod
+    public void preSetup() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -28,6 +24,15 @@ public class Login {
         driver.get("http://www.tutorialsninja.com/demo/");
         driver.findElement(By.xpath("//span[text()='My Account']")).click();
         driver.findElement(By.linkText("Login")).click();
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        driver.quit();
+    }
+
+    @Test
+    public void verifyLoginWithValidCredentials() {
         driver.findElement(By.id("input-email")).sendKeys("amotooricap9@gmail.com");
         driver.findElement(By.id("input-password")).sendKeys("12345");
         driver.findElement(By.xpath("//input[@value='Login']")).click();
@@ -36,13 +41,6 @@ public class Login {
 
     @Test
     public void verifyLoginWithInValidCredentials() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
-        driver.get("http://www.tutorialsninja.com/demo/");
-        driver.findElement(By.xpath("//span[text()='My Account']")).click();
-        driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("input-email")).sendKeys("amotooricap" + generateTimeStamp() + "@gmail.com1");
         driver.findElement(By.id("input-password")).sendKeys("123451");
         driver.findElement(By.xpath("//input[@value='Login']")).click();
@@ -52,13 +50,6 @@ public class Login {
 
     @Test
     public void verifyLoginWithoutCredentials() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
-        driver.get("http://www.tutorialsninja.com/demo/");
-        driver.findElement(By.xpath("//span[text()='My Account']")).click();
-        driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("input-email")).sendKeys("");
         driver.findElement(By.id("input-password")).sendKeys("");
         driver.findElement(By.xpath("//input[@value='Login']")).click();
