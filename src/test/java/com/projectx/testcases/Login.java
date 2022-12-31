@@ -23,7 +23,6 @@ public class Login {
         driver.findElement(By.id("input-email")).sendKeys("amotooricap9@gmail.com");
         driver.findElement(By.id("input-password")).sendKeys("12345");
         driver.findElement(By.xpath("//input[@value='Login']")).click();
-
         Assert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
         driver.quit();
 
@@ -41,7 +40,6 @@ public class Login {
         driver.findElement(By.id("input-email")).sendKeys("amotooricap" + generateTimeStamp() + "@gmail.com1");
         driver.findElement(By.id("input-password")).sendKeys("123451");
         driver.findElement(By.xpath("//input[@value='Login']")).click();
-
         String actualWarning = driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
         Assert.assertTrue(true, actualWarning);
         driver.quit();
