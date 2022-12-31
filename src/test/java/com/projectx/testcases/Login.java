@@ -1,8 +1,11 @@
 package com.projectx.testcases;
 
+import org.checkerframework.checker.units.qual.C;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -17,7 +20,17 @@ public class Login {
 
     @BeforeMethod
     public void preSetup() {
-        driver = new ChromeDriver();
+
+        String browserName = "chrome";
+
+        if (browserName.equals("chrome")) {
+            driver = new ChromeDriver();
+        } else if (browserName.equals("firefox")) {
+            driver = new FirefoxDriver();
+        } else if (browserName.equals("edge")) {
+            driver = new EdgeDriver();
+
+        }
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
