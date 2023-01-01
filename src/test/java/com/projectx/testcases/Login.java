@@ -1,13 +1,9 @@
 package com.projectx.testcases;
 
-import org.checkerframework.checker.units.qual.C;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.GeckoDriverInfo;
-import org.openqa.selenium.firefox.GeckoDriverService;
 import org.openqa.selenium.safari.SafariDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -15,7 +11,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
-import java.util.Date;
+
+import static com.projectx.utils.Utilities.generateTimeStamp;
 
 public class Login {
 
@@ -75,8 +72,5 @@ public class Login {
         Assert.assertTrue(actualWarningMessage.contains(expectedWarningMessage), "Warning: No match for E-Mail Address and/or Password.");
     }
 
-    public String generateTimeStamp() {
-        Date date = new Date();
-        return date.toString().replace(" ", "_").replace(":", "_");
-    }
+
 }
