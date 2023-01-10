@@ -12,9 +12,7 @@ public class BaseClass {
     WebDriver driver;
 
     public WebDriver initilizeBrowserAndOpenApp(String browser) {
-        String browserName = "chrome";
-//        String browserName = "safari";
-
+        String browserName = browser;
         if (browserName.equals("chrome")) {
             driver = new ChromeDriver();
         } else if (browserName.equals("safari")) {
