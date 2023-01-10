@@ -39,7 +39,6 @@ public class Register {
 
         String actualsuccessMessage = driver.findElement(By.xpath("//div[@id='content']/h1")).getText();
         Assert.assertEquals(actualsuccessMessage, "Your Account Has Been Created!");
-        driver.quit();
 
 
     }
@@ -65,7 +64,6 @@ public class Register {
 
         String actualsuccessMessage = driver.findElement(By.xpath("//div[@id='content']/h1")).getText();
         Assert.assertEquals(actualsuccessMessage, "Your Account Has Been Created!");
-        driver.quit();
 
 
     }
@@ -89,9 +87,28 @@ public class Register {
 
         String actualErrorMessage = driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
         Assert.assertEquals(actualErrorMessage, "Warning: You must agree to the Privacy Policy!");
-        driver.quit();
 
 
+    }
+
+    @Test(priority = 4)
+    public void verifyRegisteringWithoutAnyFields() {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
+        driver.get("http://www.tutorialsninja.com/demo/");
+        driver.findElement(By.xpath("//span[text()='My Account']")).click();
+        driver.findElement(By.linkText("Register")).click();
+        driver.findElement(By.xpath("//input[@value='Continue']")).click();
+        String firstNameWarning = driver.findElement(By.xpath("//input[contains(@id,'input-firstname')]/following-sibling::div")).getText();
+        Assert.assertTrue(firstNameWarning.contains("First Name must be between 1 and 32 characters!"), "First Name Error Warning not Displayed!");
+        String lastNameWarning = driver.findElement(By.xpath("//input[contains(@id,'input-lastname')]/following-sibling::div")).getText();
+        Assert.assertTrue(lastNameWarning.contains("Last Name must be between 1 and 32 characters!"), "Last Name Error Warning not Displayed!");
+        String emailWarning = driver.findElement(By.xpath("//input[contains(@id,'input-email')]/following-sibling::div")).getText();
+        Assert.assertTrue(emailWarning.contains("E-Mail Address does not appear to be valid!"), "Email Error Warning not Displayed!");
+        String TelephoneWarning = driver.findElement(By.xpath("//input[contains(@id,'input-telephone')]/following-sibling::div")).getText();
+        Assert.assertTrue(TelephoneWarning.contains("Telephone must be between 3 and 32 characters!"), "Telephone Error Warning not Displayed!");
     }
 
 }
