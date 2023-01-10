@@ -1,33 +1,36 @@
 package com.projectx.testcases;
 
+import com.projectx.base.BaseClass;
 import com.projectx.utils.Utilities;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
 
-public class Register {
+public class Register extends BaseClass {
 
     WebDriver driver;
+
+    @BeforeMethod
+    public void setUp() {
+        driver = initilizeBrowserAndOpenApp("chrome");
+        driver.findElement(By.xpath("//span[text()='My Account']")).click();
+        driver.findElement(By.linkText("Register")).click();
+    }
 
     @AfterMethod
     public void teardown() {
         driver.quit();
     }
 
+
     @Test(priority = 2)
     public void verifyRegisteringWithMandatoryFields() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
-        driver.get("http://www.tutorialsninja.com/demo/");
-        driver.findElement(By.xpath("//span[text()='My Account']")).click();
-        driver.findElement(By.linkText("Register")).click();
         driver.findElement(By.id("input-firstname")).sendKeys("Rv");
         driver.findElement(By.id("input-lastname")).sendKeys("S");
         driver.findElement(By.id("input-email")).sendKeys(Utilities.generateEmailWithTimeStamp());
@@ -45,13 +48,6 @@ public class Register {
 
     @Test(priority = 3)
     public void verifyRegisteringWithMandatoryWithRadioOptionFields() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
-        driver.get("http://www.tutorialsninja.com/demo/");
-        driver.findElement(By.xpath("//span[text()='My Account']")).click();
-        driver.findElement(By.linkText("Register")).click();
         driver.findElement(By.id("input-firstname")).sendKeys("Rv");
         driver.findElement(By.id("input-lastname")).sendKeys("S");
         driver.findElement(By.id("input-email")).sendKeys(Utilities.generateEmailWithTimeStamp());
@@ -70,13 +66,6 @@ public class Register {
 
     @Test(priority = 1)
     public void verifyRegisteringWithMandatoryWithoutPolicy() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
-        driver.get("http://www.tutorialsninja.com/demo/");
-        driver.findElement(By.xpath("//span[text()='My Account']")).click();
-        driver.findElement(By.linkText("Register")).click();
         driver.findElement(By.id("input-firstname")).sendKeys("Rv");
         driver.findElement(By.id("input-lastname")).sendKeys("S");
         driver.findElement(By.id("input-email")).sendKeys(Utilities.generateEmailWithTimeStamp());
@@ -93,13 +82,6 @@ public class Register {
 
     @Test(priority = 4)
     public void verifyRegisteringWithoutAnyFields() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
-        driver.get("http://www.tutorialsninja.com/demo/");
-        driver.findElement(By.xpath("//span[text()='My Account']")).click();
-        driver.findElement(By.linkText("Register")).click();
         driver.findElement(By.xpath("//input[@value='Continue']")).click();
         String firstNameWarning = driver.findElement(By.xpath("//input[contains(@id,'input-firstname')]/following-sibling::div")).getText();
         Assert.assertTrue(firstNameWarning.contains("First Name must be between 1 and 32 characters!"), "First Name Error Warning not Displayed!");
