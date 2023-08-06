@@ -1,0 +1,4 @@
+url = http://www.tutorialsninja.com/demo/
+browserName = chrome
+validEmail=rvsingh@gmail.com
+validPassword=12345
