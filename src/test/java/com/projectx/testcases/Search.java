@@ -1,6 +1,6 @@
 package com.projectx.testcases;
 
-import com.projectx.base.BaseClass;
+import base.Base;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -8,13 +8,18 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class Search extends BaseClass {
+import java.io.IOException;
+
+public class Search extends Base {
 
     WebDriver driver;
 
+    public Search() throws IOException {
+    }
+
     @BeforeMethod
     public void setup() {
-        driver = initilizeBrowserAndOpenApp("chrome");
+        driver = initilizeBrowserAndOpenApp(properties.getProperty("browserName"));
     }
 
     @AfterMethod

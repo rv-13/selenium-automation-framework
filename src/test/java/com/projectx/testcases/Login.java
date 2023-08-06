@@ -1,28 +1,28 @@
 package com.projectx.testcases;
 
-import com.projectx.base.BaseClass;
+import base.Base;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.safari.SafariDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
+import java.io.IOException;
 
 import static com.projectx.utils.Utilities.generateTimeStamp;
 
-public class Login extends BaseClass {
+public class Login extends Base {
 
     WebDriver driver;
 
-    @BeforeMethod
-    public void preSetup() {
+    public Login() throws IOException {
 
-        driver = initilizeBrowserAndOpenApp("chrome");
+    }
+
+    @BeforeMethod
+    public void preSetup() throws IOException {
+        driver = initilizeBrowserAndOpenApp(properties.getProperty("browserName"));
         driver.findElement(By.xpath("//span[text()='My Account']")).click();
         driver.findElement(By.linkText("Login")).click();
     }
@@ -34,8 +34,8 @@ public class Login extends BaseClass {
 
     @Test
     public void verifyLoginWithValidCredentials() {
-        driver.findElement(By.id("input-email")).sendKeys("amotooricap9@gmail.com");
-        driver.findElement(By.id("input-password")).sendKeys("12345");
+        driver.findElement(By.id("input-email")).sendKeys(properties.getProperty("validEmail"));
+        driver.findElement(By.id("input-password")).sendKeys(properties.getProperty("validPassword"));
         driver.findElement(By.xpath("//input[@value='Login']")).click();
         Assert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
     }
