@@ -1,5 +1,6 @@
 package base;
 
+import com.projectx.utils.Utilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -27,7 +28,6 @@ public class Base {
     public WebDriver initilizeBrowserAndOpenApp(String browser) {
         String browserName = browser;
         if (browserName.equals("chrome")) {
-//            System.setProperty("webdriver.chrome.driver" ,  "/Users/ravi/Applications/chromedriver_osx/chromedriver");
             driver = new ChromeDriver();
         } else if (browserName.equals("safari")) {
             driver = new SafariDriver();
@@ -36,8 +36,8 @@ public class Base {
 
         }
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Utilities.IMPLICIT_WAIT_TIME));
+        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(Utilities.PAGE_LOAD_TIME));
         driver.get(properties.getProperty("url"));
         return driver;
     }
