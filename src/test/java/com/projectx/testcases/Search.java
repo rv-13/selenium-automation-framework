@@ -46,7 +46,6 @@ public class Search extends Base {
 
     @Test
     public void verifySearchWithNoProduct() {
-        driver.findElement(By.name("search")).sendKeys("");
         driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
         String noProductFoundMessage = driver.findElement(By.xpath("//input[@id='button-search']/following-sibling::p")).getText();
         Assert.assertTrue(noProductFoundMessage.contains(dataProperties.getProperty("noProductSearchActualWarning")));

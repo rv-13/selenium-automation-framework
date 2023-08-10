@@ -31,7 +31,8 @@ public class Register extends Base {
     }
 
 
-    @Test(priority = 2)
+    @Test
+    //(priority = 2)
     public void verifyRegisteringWithMandatoryFields() {
         driver.findElement(By.id("input-firstname")).sendKeys(dataProperties.getProperty("firstName"));
         driver.findElement(By.id("input-lastname")).sendKeys(dataProperties.getProperty("lastName"));
@@ -48,7 +49,8 @@ public class Register extends Base {
 
     }
 
-    @Test(priority = 3)
+    @Test
+    //(priority = 3)
     public void verifyRegisteringWithMandatoryWithRadioOptionFields() {
         driver.findElement(By.id("input-firstname")).sendKeys(dataProperties.getProperty("firstName"));
         driver.findElement(By.id("input-lastname")).sendKeys(dataProperties.getProperty("lastName"));
@@ -66,7 +68,8 @@ public class Register extends Base {
 
     }
 
-    @Test(priority = 1)
+    @Test
+    //(priority = 1)
     public void verifyRegisteringWithMandatoryWithoutPolicy() {
         driver.findElement(By.id("input-firstname")).sendKeys(dataProperties.getProperty("firstName"));
         driver.findElement(By.id("input-lastname")).sendKeys(dataProperties.getProperty("lastName"));
@@ -82,7 +85,8 @@ public class Register extends Base {
 
     }
 
-    @Test(priority = 4)
+    @Test
+    //(priority = 4)
     public void verifyRegisteringWithoutAnyFields() {
         driver.findElement(By.xpath("//input[@value='Continue']")).click();
         String firstNameWarning = driver.findElement(By.xpath("//input[contains(@id,'input-firstname')]/following-sibling::div")).getText();

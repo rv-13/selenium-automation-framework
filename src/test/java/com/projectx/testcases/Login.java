@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -33,11 +34,28 @@ public class Login extends Base {
     }
 
     @Test
-    public void verifyLoginWithValidCredentials() {
+    public void verifyLoginWithValidCredentialsPropData() {
         driver.findElement(By.id("input-email")).sendKeys(properties.getProperty("validEmail"));
         driver.findElement(By.id("input-password")).sendKeys(properties.getProperty("validPassword"));
         driver.findElement(By.xpath("//input[@value='Login']")).click();
         Assert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
+    }
+
+    @Test(dataProvider = "validCredsDataProvider")
+    public void verifyLoginWithValidCredentialsDataProvider(String email, String password) {
+        driver.findElement(By.id("input-email")).sendKeys(email);
+        driver.findElement(By.id("input-password")).sendKeys(password);
+        driver.findElement(By.xpath("//input[@value='Login']")).click();
+        Assert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
+    }
+
+
+    @DataProvider(name = "validCredsDataProvider")
+    public Object[][] feedTestData() {
+        Object[][] data = {{"rvsingh@gmail.com", "12345"},
+                {"rvsingh@gmail.com", "12345"},
+                {"rvsingh@gmail.com", "12345"}};
+        return data;
     }
 
     @Test
