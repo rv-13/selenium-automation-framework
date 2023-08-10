@@ -16,22 +16,26 @@ public class Base {
 
     WebDriver driver;
     public Properties properties;
+    public Properties dataProperties;
 
     public Base() throws IOException {
         properties = new Properties();
-        File propFile = new File(System.getProperty("user.dir") + "/src/main/java/com/projectx/config/properties");
-        System.out.println(propFile + "propFIleName");
+        File propFile = new File(System.getProperty("user.dir") + "/src/main/java/com/projectx/config/config.properties");
+        dataProperties = new Properties();
+        File datPropFile = new File(System.getProperty("user.dir") + "/src/main/java/com/projectx/testdata/testdata.properties");
+        FileInputStream fisForData = new FileInputStream(datPropFile);
+        dataProperties.load(fisForData);
         FileInputStream fis = new FileInputStream(propFile);
         properties.load(fis);
     }
 
     public WebDriver initilizeBrowserAndOpenApp(String browser) {
         String browserName = browser;
-        if (browserName.equals("chrome")) {
+        if (browserName.equalsIgnoreCase("chrome")) {
             driver = new ChromeDriver();
-        } else if (browserName.equals("safari")) {
+        } else if (browserName.equalsIgnoreCase("safari")) {
             driver = new SafariDriver();
-        } else if (browserName.equals("edge")) {
+        } else if (browserName.equalsIgnoreCase("edge")) {
             driver = new EdgeDriver();
 
         }

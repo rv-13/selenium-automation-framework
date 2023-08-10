@@ -29,7 +29,7 @@ public class Login extends Base {
 
     @AfterMethod
     public void tearDown() {
-        driver.quit();
+//        driver.quit();
     }
 
     @Test
@@ -42,11 +42,13 @@ public class Login extends Base {
 
     @Test
     public void verifyLoginWithInValidCredentials() {
-        driver.findElement(By.id("input-email")).sendKeys("amotooricap" + generateTimeStamp() + "@gmail.com1");
-        driver.findElement(By.id("input-password")).sendKeys("123451");
+        driver.findElement(By.id("input-email")).sendKeys("test" + generateTimeStamp() + "@gmail.com1");
+        driver.findElement(By.id("input-password")).sendKeys(dataProperties.getProperty("invalidPassword"));
         driver.findElement(By.xpath("//input[@value='Login']")).click();
-        String actualWarning = driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
-        Assert.assertTrue(true, actualWarning);
+        String actualWarningMessage = driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
+        Assert.assertTrue(true, actualWarningMessage);
+        String expectedWarningMessage = dataProperties.getProperty("expectedWarning");
+        Assert.assertTrue(actualWarningMessage.contains(expectedWarningMessage), expectedWarningMessage);
     }
 
     @Test
@@ -55,8 +57,8 @@ public class Login extends Base {
         driver.findElement(By.id("input-password")).sendKeys("");
         driver.findElement(By.xpath("//input[@value='Login']")).click();
         String actualWarningMessage = driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
-        String expectedWarningMessage = "Warning: No match for E-Mail Address and/or Password.";
-        Assert.assertTrue(actualWarningMessage.contains(expectedWarningMessage), "Warning: No match for E-Mail Address and/or Password.");
+        String expectedWarningMessage = dataProperties.getProperty("expectedWarning");
+        Assert.assertTrue(actualWarningMessage.contains(expectedWarningMessage), expectedWarningMessage);
     }
 
 
