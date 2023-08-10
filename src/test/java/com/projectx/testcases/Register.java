@@ -33,27 +33,27 @@ public class Register extends Base {
 
     @Test(priority = 2)
     public void verifyRegisteringWithMandatoryFields() {
-        driver.findElement(By.id("input-firstname")).sendKeys("Rv");
-        driver.findElement(By.id("input-lastname")).sendKeys("S");
+        driver.findElement(By.id("input-firstname")).sendKeys(dataProperties.getProperty("firstName"));
+        driver.findElement(By.id("input-lastname")).sendKeys(dataProperties.getProperty("lastName"));
         driver.findElement(By.id("input-email")).sendKeys(Utilities.generateEmailWithTimeStamp());
-        driver.findElement(By.id("input-telephone")).sendKeys("1234567890");
+        driver.findElement(By.id("input-telephone")).sendKeys(dataProperties.getProperty("telephone"));
         driver.findElement(By.id("input-password")).sendKeys(properties.getProperty("validPassword"));
         driver.findElement(By.id("input-confirm")).sendKeys(properties.getProperty("validPassword"));
         driver.findElement(By.name("agree")).click();
         driver.findElement(By.xpath("//input[@value='Continue']")).click();
 
-        String actualsuccessMessage = driver.findElement(By.xpath("//div[@id='content']/h1")).getText();
-        Assert.assertEquals(actualsuccessMessage, "Your Account Has Been Created!");
+        String actualSuccessMessage = driver.findElement(By.xpath("//div[@id='content']/h1")).getText();
+        Assert.assertEquals(actualSuccessMessage, dataProperties.getProperty("accountSuccessCreatedHeading"));
 
 
     }
 
     @Test(priority = 3)
     public void verifyRegisteringWithMandatoryWithRadioOptionFields() {
-        driver.findElement(By.id("input-firstname")).sendKeys("Rv");
-        driver.findElement(By.id("input-lastname")).sendKeys("S");
+        driver.findElement(By.id("input-firstname")).sendKeys(dataProperties.getProperty("firstName"));
+        driver.findElement(By.id("input-lastname")).sendKeys(dataProperties.getProperty("lastName"));
         driver.findElement(By.id("input-email")).sendKeys(Utilities.generateEmailWithTimeStamp());
-        driver.findElement(By.id("input-telephone")).sendKeys("1234567890");
+        driver.findElement(By.id("input-telephone")).sendKeys(dataProperties.getProperty("telephone"));
         driver.findElement(By.id("input-password")).sendKeys(properties.getProperty("validPassword"));
         driver.findElement(By.id("input-confirm")).sendKeys(properties.getProperty("validPassword"));
         driver.findElement(By.xpath("//input[@name='newsletter']")).click();
@@ -61,23 +61,23 @@ public class Register extends Base {
         driver.findElement(By.xpath("//input[@value='Continue']")).click();
 
         String actualsuccessMessage = driver.findElement(By.xpath("//div[@id='content']/h1")).getText();
-        Assert.assertEquals(actualsuccessMessage, "Your Account Has Been Created!");
+        Assert.assertEquals(actualsuccessMessage, dataProperties.getProperty("accountSuccessCreatedHeading"));
 
 
     }
 
     @Test(priority = 1)
     public void verifyRegisteringWithMandatoryWithoutPolicy() {
-        driver.findElement(By.id("input-firstname")).sendKeys("Rv");
-        driver.findElement(By.id("input-lastname")).sendKeys("S");
+        driver.findElement(By.id("input-firstname")).sendKeys(dataProperties.getProperty("firstName"));
+        driver.findElement(By.id("input-lastname")).sendKeys(dataProperties.getProperty("lastName"));
         driver.findElement(By.id("input-email")).sendKeys(Utilities.generateEmailWithTimeStamp());
-        driver.findElement(By.id("input-telephone")).sendKeys("1234567890");
+        driver.findElement(By.id("input-telephone")).sendKeys(dataProperties.getProperty("telephone"));
         driver.findElement(By.id("input-password")).sendKeys(properties.getProperty("validPassword"));
         driver.findElement(By.id("input-confirm")).sendKeys(properties.getProperty("validPassword"));
         driver.findElement(By.xpath("//input[@value='Continue']")).click();
 
-        String actualErrorMessage = driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
-        Assert.assertEquals(actualErrorMessage, "Warning: You must agree to the Privacy Policy!");
+        String actualErrorMessagePrivacyPolicy = driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
+        Assert.assertEquals(actualErrorMessagePrivacyPolicy, dataProperties.getProperty("privacyPolicyExpectedWarning"));
 
 
     }
@@ -86,13 +86,13 @@ public class Register extends Base {
     public void verifyRegisteringWithoutAnyFields() {
         driver.findElement(By.xpath("//input[@value='Continue']")).click();
         String firstNameWarning = driver.findElement(By.xpath("//input[contains(@id,'input-firstname')]/following-sibling::div")).getText();
-        Assert.assertTrue(firstNameWarning.contains("First Name must be between 1 and 32 characters!"), "First Name Error Warning not Displayed!");
+        Assert.assertTrue(firstNameWarning.contains(dataProperties.getProperty("firstNameWarningExpectedWarning")), "First Name Error Warning not Displayed!");
         String lastNameWarning = driver.findElement(By.xpath("//input[contains(@id,'input-lastname')]/following-sibling::div")).getText();
-        Assert.assertTrue(lastNameWarning.contains("Last Name must be between 1 and 32 characters!"), "Last Name Error Warning not Displayed!");
+        Assert.assertTrue(lastNameWarning.contains(dataProperties.getProperty("lastNameWarningExpectedWarning")), "Last Name Error Warning not Displayed!");
         String emailWarning = driver.findElement(By.xpath("//input[contains(@id,'input-email')]/following-sibling::div")).getText();
-        Assert.assertTrue(emailWarning.contains("E-Mail Address does not appear to be valid!"), "Email Error Warning not Displayed!");
+        Assert.assertTrue(emailWarning.contains(dataProperties.getProperty("emailWarningExpectedWarning")), "Email Error Warning not Displayed!");
         String TelephoneWarning = driver.findElement(By.xpath("//input[contains(@id,'input-telephone')]/following-sibling::div")).getText();
-        Assert.assertTrue(TelephoneWarning.contains("Telephone must be between 3 and 32 characters!"), "Telephone Error Warning not Displayed!");
+        Assert.assertTrue(TelephoneWarning.contains(dataProperties.getProperty("TelephoneWarningExpectedWarning")), "Telephone Error Warning not Displayed!");
     }
 
 }

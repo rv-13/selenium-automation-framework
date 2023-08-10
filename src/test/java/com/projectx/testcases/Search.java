@@ -29,7 +29,7 @@ public class Search extends Base {
 
     @Test
     public void verifySearchWithValidProduct() {
-        driver.findElement(By.name("search")).sendKeys("HP");
+        driver.findElement(By.name("search")).sendKeys(dataProperties.getProperty("validProductSearch"));
         driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
         Assert.assertTrue(driver.findElement(By.linkText("HP LP3065")).isDisplayed());
 
@@ -37,10 +37,10 @@ public class Search extends Base {
 
     @Test
     public void verifySearchWithInValidProduct() {
-        driver.findElement(By.name("search")).sendKeys("avxj");
+        driver.findElement(By.name("search")).sendKeys(dataProperties.getProperty("invalidProductSearch"));
         driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
         String noProductFoundMessage = driver.findElement(By.xpath("//input[@id='button-search']/following-sibling::p")).getText();
-        Assert.assertTrue(noProductFoundMessage.contains("There is no product that matches the search criteria."));
+        Assert.assertTrue(noProductFoundMessage.contains(dataProperties.getProperty("noProductSearchActualWarning")));
 
     }
 
@@ -49,7 +49,7 @@ public class Search extends Base {
         driver.findElement(By.name("search")).sendKeys("");
         driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
         String noProductFoundMessage = driver.findElement(By.xpath("//input[@id='button-search']/following-sibling::p")).getText();
-        Assert.assertTrue(noProductFoundMessage.contains("There is no product that matches the search criteria."));
+        Assert.assertTrue(noProductFoundMessage.contains(dataProperties.getProperty("noProductSearchActualWarning")));
 
     }
 }

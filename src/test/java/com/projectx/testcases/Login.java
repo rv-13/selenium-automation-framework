@@ -29,7 +29,7 @@ public class Login extends Base {
 
     @AfterMethod
     public void tearDown() {
-//        driver.quit();
+        driver.quit();
     }
 
     @Test
@@ -47,18 +47,16 @@ public class Login extends Base {
         driver.findElement(By.xpath("//input[@value='Login']")).click();
         String actualWarningMessage = driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
         Assert.assertTrue(true, actualWarningMessage);
-        String expectedWarningMessage = dataProperties.getProperty("expectedWarning");
-        Assert.assertTrue(actualWarningMessage.contains(expectedWarningMessage), expectedWarningMessage);
+        String expectedWarningNoEmailpass = dataProperties.getProperty("expectedWarningNoEmailpass");
+        Assert.assertTrue(actualWarningMessage.contains(expectedWarningNoEmailpass), "No Expected Warning Message is Displayed");
     }
 
     @Test
     public void verifyLoginWithoutCredentials() {
-        driver.findElement(By.id("input-email")).sendKeys("");
-        driver.findElement(By.id("input-password")).sendKeys("");
         driver.findElement(By.xpath("//input[@value='Login']")).click();
         String actualWarningMessage = driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
-        String expectedWarningMessage = dataProperties.getProperty("expectedWarning");
-        Assert.assertTrue(actualWarningMessage.contains(expectedWarningMessage), expectedWarningMessage);
+        String expectedWarningNoEmailpass = dataProperties.getProperty("expectedWarningNoEmailpass");
+        Assert.assertTrue(actualWarningMessage.contains(expectedWarningNoEmailpass), "No Expected Warning Message is Displayed");
     }
 
 
