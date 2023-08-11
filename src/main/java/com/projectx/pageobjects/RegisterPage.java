@@ -16,49 +16,49 @@ public class RegisterPage {
 
     //Page Objects
     @FindBy(id = "input-firstname")
-    WebElement firstNameField;
+    private WebElement firstNameField;
 
     @FindBy(id = "input-lastname")
-    WebElement lastNameField;
+    private WebElement lastNameField;
 
     @FindBy(id = "input-email")
-    WebElement emailField;
+    private WebElement emailField;
 
     @FindBy(id = "input-telephone")
-    WebElement telePhoneField;
+    private WebElement telephoneField;
 
     @FindBy(id = "input-password")
-    WebElement passwordField;
+    private WebElement passwordField;
 
     @FindBy(id = "input-confirm")
-    WebElement confirmField;
+    private WebElement confirmField;
 
     @FindBy(name = "agree")
-    WebElement agreeCheckField;
+    private WebElement agreeCheckField;
 
     @FindBy(xpath = "//input[@value='Continue']")
-    WebElement continueElement;
+    private WebElement continueElement;
 
     @FindBy(xpath = "//div[@id='content']/h1")
-    WebElement accountSuccessCreatedHeading;
+    private WebElement accountSuccessCreatedHeading;
 
     @FindBy(xpath = "//input[@name='newsletter']")
-    WebElement newsLetterCheckField;
+    private WebElement newsLetterCheckField;
 
     @FindBy(xpath = "//div[contains(@class,'alert-dismissible')]")
-    WebElement actualErrorMessagePrivacyPolicyField;
+    private WebElement actualErrorMessagePrivacyPolicyField;
 
     @FindBy(xpath = "//input[contains(@id,'input-firstname')]/following-sibling::div")
-    WebElement firstNameWarningField;
+    private WebElement firstNameWarningField;
 
     @FindBy(xpath = "//input[contains(@id,'input-lastname')]/following-sibling::div")
-    WebElement lastNameWarningField;
+    private WebElement lastNameWarningField;
 
     @FindBy(xpath = "//input[contains(@id,'input-email')]/following-sibling::div")
-    WebElement emailWarningWarningField;
+    private WebElement emailWarningWarningField;
 
     @FindBy(xpath = "//input[contains(@id,'input-telephone')]/following-sibling::div")
-    WebElement telephoneWarningField;
+    private WebElement telephoneWarningField;
 
 
     //Actions
@@ -76,7 +76,7 @@ public class RegisterPage {
     }
 
     public void feedTelephoneField(String telePhone) {
-        telePhoneField.sendKeys(telePhone);
+        telephoneField.sendKeys(telePhone);
     }
 
     public void feedPasswordField(String password) {
