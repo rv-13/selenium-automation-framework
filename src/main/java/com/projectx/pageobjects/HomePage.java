@@ -22,6 +22,8 @@ public class HomePage {
     @FindBy(linkText = "Login")
     WebElement loginOption;
 
+    @FindBy(linkText = "Register")
+    WebElement registerOption;
 
 
     //Actions
@@ -31,6 +33,10 @@ public class HomePage {
 
     public void selectLoginOption() {
         loginOption.click();
+    }
+
+    public void clickOnRegister() {
+        registerOption.click();
     }
 
 
