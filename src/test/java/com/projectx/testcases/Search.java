@@ -1,6 +1,8 @@
 package com.projectx.testcases;
 
 import base.Base;
+import com.projectx.pageobjects.HomePage;
+import com.projectx.pageobjects.SearchPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -13,13 +15,18 @@ import java.io.IOException;
 public class Search extends Base {
 
     WebDriver driver;
+    SearchPage searchPage;
+    HomePage homePage;
 
     public Search() throws IOException {
     }
 
     @BeforeMethod
-    public void setup() {
+    public void preSetup() {
+
         driver = initilizeBrowserAndOpenApp(properties.getProperty("browserName"));
+        searchPage = new SearchPage(driver);
+        homePage = new HomePage(driver);
     }
 
     @AfterMethod
@@ -29,25 +36,27 @@ public class Search extends Base {
 
     @Test
     public void verifySearchWithValidProduct() {
-        driver.findElement(By.name("search")).sendKeys(dataProperties.getProperty("validProductSearch"));
-        driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
-        Assert.assertTrue(driver.findElement(By.linkText("HP LP3065")).isDisplayed());
+        homePage.feedSetSearchField(dataProperties.getProperty("validProductSearch"));
+        homePage.clickSearchButton();
+
+        Assert.assertTrue(searchPage.displayStatusOfValidHProduct());
 
     }
 
     @Test
     public void verifySearchWithInValidProduct() {
-        driver.findElement(By.name("search")).sendKeys(dataProperties.getProperty("invalidProductSearch"));
-        driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
-        String noProductFoundMessage = driver.findElement(By.xpath("//input[@id='button-search']/following-sibling::p")).getText();
+        homePage.feedSetSearchField(dataProperties.getProperty("invalidProductSearch"));
+        homePage.clickSearchButton();
+
+        String noProductFoundMessage = searchPage.retrieveNoProductFoundMessageText();
         Assert.assertTrue(noProductFoundMessage.contains(dataProperties.getProperty("noProductSearchActualWarning")));
 
     }
 
     @Test
     public void verifySearchWithNoProduct() {
-        driver.findElement(By.xpath("//div[@id='search']/descendant::button")).click();
-        String noProductFoundMessage = driver.findElement(By.xpath("//input[@id='button-search']/following-sibling::p")).getText();
+        homePage.clickSearchButton();
+        String noProductFoundMessage = searchPage.retrieveNoProductFoundMessageText();
         Assert.assertTrue(noProductFoundMessage.contains(dataProperties.getProperty("noProductSearchActualWarning")));
 
     }

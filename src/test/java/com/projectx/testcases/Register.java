@@ -1,6 +1,7 @@
 package com.projectx.testcases;
 
 import base.Base;
+import com.projectx.pageobjects.AccountSuccessPage;
 import com.projectx.pageobjects.HomePage;
 import com.projectx.pageobjects.LoginPage;
 import com.projectx.pageobjects.RegisterPage;
@@ -19,15 +20,17 @@ public class Register extends Base {
     WebDriver driver;
     HomePage homePage;
     RegisterPage registerPage;
+    AccountSuccessPage accountSuccessPage;
 
     public Register() throws IOException {
     }
 
     @BeforeMethod
-    public void setUp() {
+    public void preSetup() {
         driver = initilizeBrowserAndOpenApp(properties.getProperty("browserName"));
         homePage = new HomePage(driver);
         registerPage = new RegisterPage(driver);
+        accountSuccessPage = new AccountSuccessPage(driver);
         homePage.clickOnMyAccount();
         homePage.clickOnRegister();
     }
@@ -49,7 +52,7 @@ public class Register extends Base {
         registerPage.feedConfirmField(properties.getProperty("validPassword"));
         registerPage.clickOnAgree();
         registerPage.clickOnContinue();
-        String actualHeadingText = registerPage.retrieveAccountSuccessCreatedHeadingText();
+        String actualHeadingText = accountSuccessPage.retrieveAccountSuccessCreatedHeadingText();
         Assert.assertEquals(actualHeadingText, dataProperties.getProperty("accountSuccessCreatedHeading"));
 
 
@@ -68,7 +71,7 @@ public class Register extends Base {
         registerPage.clickOnAgree();
         registerPage.clickOnContinue();
 
-        String actualHeadingText = registerPage.retrieveAccountSuccessCreatedHeadingText();
+        String actualHeadingText = accountSuccessPage.retrieveAccountSuccessCreatedHeadingText();
         Assert.assertEquals(actualHeadingText, dataProperties.getProperty("accountSuccessCreatedHeading"));
 
 
