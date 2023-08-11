@@ -1,6 +1,9 @@
 package com.projectx.testcases;
 
 import base.Base;
+import com.projectx.pageobjects.AccountPage;
+import com.projectx.pageobjects.HomePage;
+import com.projectx.pageobjects.LoginPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
@@ -12,10 +15,14 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 
 import static com.projectx.utils.Utilities.generateTimeStamp;
+import static com.projectx.utils.Utilities.getTestDataFromExcel;
 
 public class Login extends Base {
 
     WebDriver driver;
+    LoginPage loginPage;
+    HomePage homePage;
+    AccountPage accountPage;
 
     public Login() throws IOException {
 
@@ -24,9 +31,13 @@ public class Login extends Base {
     @BeforeMethod
     public void preSetup() throws IOException {
         driver = initilizeBrowserAndOpenApp(properties.getProperty("browserName"));
-        driver.findElement(By.xpath("//span[text()='My Account']")).click();
-        driver.findElement(By.linkText("Login")).click();
+        homePage = new HomePage(driver);
+        loginPage = new LoginPage(driver);
+        accountPage = new AccountPage(driver);
+        homePage.clickOnMyAccount();
+        homePage.selectLoginOption();
     }
+
 
     @AfterMethod
     public void tearDown() {
@@ -35,46 +46,44 @@ public class Login extends Base {
 
     @Test
     public void verifyLoginWithValidCredentialsPropData() {
-        driver.findElement(By.id("input-email")).sendKeys(properties.getProperty("validEmail"));
-        driver.findElement(By.id("input-password")).sendKeys(properties.getProperty("validPassword"));
-        driver.findElement(By.xpath("//input[@value='Login']")).click();
-        Assert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
+        loginPage.sendKeysEmail(properties.getProperty("validEmail"));
+        loginPage.sendKeysPassword(properties.getProperty("validPassword"));
+        loginPage.clickOnLoginButton();
+        Assert.assertTrue(accountPage.getDisplayOptionOfEditYourAccountInformationOption());
     }
 
     @Test(dataProvider = "validCredsDataProvider")
     public void verifyLoginWithValidCredentialsDataProvider(String email, String password) {
-        driver.findElement(By.id("input-email")).sendKeys(email);
-        driver.findElement(By.id("input-password")).sendKeys(password);
-        driver.findElement(By.xpath("//input[@value='Login']")).click();
+        loginPage.sendKeysEmail(email);
+        loginPage.sendKeysPassword(password);
+        loginPage.clickOnLoginButton();
         Assert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
     }
 
-
+    //Excel data provider
     @DataProvider(name = "validCredsDataProvider")
-    public Object[][] feedTestData() {
-        Object[][] data = {{"rvsingh@gmail.com", "12345"},
-                {"rvsingh@gmail.com", "12345"},
-                {"rvsingh@gmail.com", "12345"}};
+    public Object[][] feedTestData() throws IOException {
+        Object[][] data = getTestDataFromExcel(dataProperties.getProperty("testSheetName"));
         return data;
     }
 
     @Test
     public void verifyLoginWithInValidCredentials() {
-        driver.findElement(By.id("input-email")).sendKeys("test" + generateTimeStamp() + "@gmail.com1");
-        driver.findElement(By.id("input-password")).sendKeys(dataProperties.getProperty("invalidPassword"));
-        driver.findElement(By.xpath("//input[@value='Login']")).click();
-        String actualWarningMessage = driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
-        Assert.assertTrue(true, actualWarningMessage);
+        loginPage.sendKeysEmail("test" + generateTimeStamp() + "@gmail.com1");
+        loginPage.sendKeysPassword(dataProperties.getProperty("invalidPassword"));
+        loginPage.clickOnLoginButton();
+        String actualEmailWarningMessage = loginPage.emailWarningMessageOnLoginPageGetText();
+        Assert.assertTrue(true, actualEmailWarningMessage);
         String expectedWarningNoEmailpass = dataProperties.getProperty("expectedWarningNoEmailpass");
-        Assert.assertTrue(actualWarningMessage.contains(expectedWarningNoEmailpass), "No Expected Warning Message is Displayed");
+        Assert.assertTrue(actualEmailWarningMessage.contains(expectedWarningNoEmailpass), "No Expected Warning Message is Displayed");
     }
 
     @Test
     public void verifyLoginWithoutCredentials() {
-        driver.findElement(By.xpath("//input[@value='Login']")).click();
-        String actualWarningMessage = driver.findElement(By.xpath("//div[contains(@class,'alert-dismissible')]")).getText();
+        loginPage.clickOnLoginButton();
+        String actualEmailWarningMessage = loginPage.emailWarningMessageOnLoginPageGetText();
         String expectedWarningNoEmailpass = dataProperties.getProperty("expectedWarningNoEmailpass");
-        Assert.assertTrue(actualWarningMessage.contains(expectedWarningNoEmailpass), "No Expected Warning Message is Displayed");
+        Assert.assertTrue(actualEmailWarningMessage.contains(expectedWarningNoEmailpass), "No Expected Warning Message is Displayed");
     }
 
 
