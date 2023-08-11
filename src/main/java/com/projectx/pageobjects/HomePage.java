@@ -25,6 +25,12 @@ public class HomePage {
     @FindBy(linkText = "Register")
     WebElement registerOption;
 
+    @FindBy(name = "search")
+    WebElement searchField;
+
+    @FindBy(xpath = "//div[@id='search']/descendant::button")
+    WebElement searchButton;
+
 
     //Actions
     public void clickOnMyAccount() {
@@ -39,5 +45,12 @@ public class HomePage {
         registerOption.click();
     }
 
+    public void feedSetSearchField(String productName) {
+        searchField.sendKeys(productName);
+    }
+
+    public void clickSearchButton() {
+        searchButton.click();
+    }
 
 }

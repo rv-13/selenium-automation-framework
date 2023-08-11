@@ -39,8 +39,7 @@ public class RegisterPage {
     @FindBy(xpath = "//input[@value='Continue']")
     private WebElement continueElement;
 
-    @FindBy(xpath = "//div[@id='content']/h1")
-    private WebElement accountSuccessCreatedHeading;
+
 
     @FindBy(xpath = "//input[@name='newsletter']")
     private WebElement newsLetterCheckField;
@@ -95,9 +94,6 @@ public class RegisterPage {
         continueElement.click();
     }
 
-    public String retrieveAccountSuccessCreatedHeadingText() {
-        return accountSuccessCreatedHeading.getText();
-    }
 
     public void newsLetterClick() {
         newsLetterCheckField.click();
