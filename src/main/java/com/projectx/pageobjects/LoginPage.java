@@ -43,6 +43,12 @@ public class LoginPage {
         loginButton.click();
     }
 
+    public void login(String emailText, String emailPassword) {
+        emailAddressField.sendKeys(emailText);
+        passwordField.sendKeys(emailPassword);
+        loginButton.click();
+    }
+
     public String emailWarningMessageOnLoginPageGetText() {
         return emailWarningMessageOnLoginPage.getText();
 

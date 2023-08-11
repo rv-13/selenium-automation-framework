@@ -45,12 +45,18 @@ public class HomePage {
         registerOption.click();
     }
 
-    public void feedSetSearchField(String productName) {
+    public void feedSetProductSearchField(String productName) {
         searchField.sendKeys(productName);
+        clickSearchButton();
     }
 
     public void clickSearchButton() {
         searchButton.click();
+    }
+
+    public void navigateToRegisterPage() {
+        myAccountDropMenu.click();
+        registerOption.click();
     }
 
 }

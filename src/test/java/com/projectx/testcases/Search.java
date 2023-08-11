@@ -36,28 +36,22 @@ public class Search extends Base {
 
     @Test
     public void verifySearchWithValidProduct() {
-        homePage.feedSetSearchField(dataProperties.getProperty("validProductSearch"));
-        homePage.clickSearchButton();
-
+        homePage.feedSetProductSearchField(dataProperties.getProperty("validProductSearch"));
         Assert.assertTrue(searchPage.displayStatusOfValidHProduct());
 
     }
 
     @Test
     public void verifySearchWithInValidProduct() {
-        homePage.feedSetSearchField(dataProperties.getProperty("invalidProductSearch"));
-        homePage.clickSearchButton();
-
-        String noProductFoundMessage = searchPage.retrieveNoProductFoundMessageText();
-        Assert.assertTrue(noProductFoundMessage.contains(dataProperties.getProperty("noProductSearchActualWarning")));
+        homePage.feedSetProductSearchField(dataProperties.getProperty("invalidProductSearch"));
+        Assert.assertTrue(searchPage.retrieveNoProductFoundMessageText().contains(dataProperties.getProperty("noProductSearchActualWarning")));
 
     }
 
     @Test
     public void verifySearchWithNoProduct() {
         homePage.clickSearchButton();
-        String noProductFoundMessage = searchPage.retrieveNoProductFoundMessageText();
-        Assert.assertTrue(noProductFoundMessage.contains(dataProperties.getProperty("noProductSearchActualWarning")));
+        Assert.assertTrue(searchPage.retrieveNoProductFoundMessageText().contains(dataProperties.getProperty("noProductSearchActualWarning")));
 
     }
 }

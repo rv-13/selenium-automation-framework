@@ -46,17 +46,13 @@ public class Login extends Base {
 
     @Test
     public void verifyLoginWithValidCredentialsPropData() {
-        loginPage.sendKeysEmail(properties.getProperty("validEmail"));
-        loginPage.sendKeysPassword(properties.getProperty("validPassword"));
-        loginPage.clickOnLoginButton();
+        loginPage.login(properties.getProperty("validEmail"), properties.getProperty("validPassword"));
         Assert.assertTrue(accountPage.getDisplayOptionOfEditYourAccountInformationOption());
     }
 
     @Test(dataProvider = "validCredsDataProvider")
     public void verifyLoginWithValidCredentialsDataProvider(String email, String password) {
-        loginPage.sendKeysEmail(email);
-        loginPage.sendKeysPassword(password);
-        loginPage.clickOnLoginButton();
+        loginPage.login(email, password);
         Assert.assertTrue(driver.findElement(By.linkText("Edit your account information")).isDisplayed());
     }
 
@@ -69,21 +65,15 @@ public class Login extends Base {
 
     @Test
     public void verifyLoginWithInValidCredentials() {
-        loginPage.sendKeysEmail("test" + generateTimeStamp() + "@gmail.com1");
-        loginPage.sendKeysPassword(dataProperties.getProperty("invalidPassword"));
-        loginPage.clickOnLoginButton();
-        String actualEmailWarningMessage = loginPage.emailWarningMessageOnLoginPageGetText();
-        Assert.assertTrue(true, actualEmailWarningMessage);
-        String expectedWarningNoEmailpass = dataProperties.getProperty("expectedWarningNoEmailpass");
-        Assert.assertTrue(actualEmailWarningMessage.contains(expectedWarningNoEmailpass), "No Expected Warning Message is Displayed");
+        loginPage.login("Test" + generateTimeStamp() + "@gmail.com1", dataProperties.getProperty("invalidPassword"));
+        Assert.assertTrue(true, loginPage.emailWarningMessageOnLoginPageGetText());
+        Assert.assertTrue(loginPage.emailWarningMessageOnLoginPageGetText().contains(dataProperties.getProperty("expectedWarningNoEmailpass")), "No Expected Warning Message is Displayed");
     }
 
     @Test
     public void verifyLoginWithoutCredentials() {
         loginPage.clickOnLoginButton();
-        String actualEmailWarningMessage = loginPage.emailWarningMessageOnLoginPageGetText();
-        String expectedWarningNoEmailpass = dataProperties.getProperty("expectedWarningNoEmailpass");
-        Assert.assertTrue(actualEmailWarningMessage.contains(expectedWarningNoEmailpass), "No Expected Warning Message is Displayed");
+        Assert.assertTrue(loginPage.emailWarningMessageOnLoginPageGetText().contains(dataProperties.getProperty("expectedWarningNoEmailpass")), "No Expected Warning Message is Displayed");
     }
 
 

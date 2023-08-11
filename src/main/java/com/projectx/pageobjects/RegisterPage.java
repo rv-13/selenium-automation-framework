@@ -40,7 +40,6 @@ public class RegisterPage {
     private WebElement continueElement;
 
 
-
     @FindBy(xpath = "//input[@name='newsletter']")
     private WebElement newsLetterCheckField;
 
@@ -90,10 +89,10 @@ public class RegisterPage {
         agreeCheckField.click();
     }
 
-    public void clickOnContinue() {
+    public AccountSuccessPage clickOnContinue() {
         continueElement.click();
+        return new AccountSuccessPage(driver);
     }
-
 
     public void newsLetterClick() {
         newsLetterCheckField.click();
@@ -117,6 +116,25 @@ public class RegisterPage {
 
     public String retrieveTelephoneWarningField() {
         return telephoneWarningField.getText();
+    }
+
+    public void registerUser(String firstName, String lastName, String email, String telePhone, String password) {
+        firstNameField.sendKeys(firstName);
+        lastNameField.sendKeys(lastName);
+        emailField.sendKeys(email);
+        telephoneField.sendKeys(telePhone);
+        passwordField.sendKeys(password);
+        confirmField.sendKeys(password);
+    }
+
+    public boolean displayStatusOfAllWarningMessages(String firstNameWarningExpectedWarning, String lastNameWarningExpectedWarning, String emailWarningExpectedWarning, String telephoneWarningExpectedWarning) {
+
+        return firstNameWarningField.getText().contains(firstNameWarningExpectedWarning) &&
+                lastNameWarningField.getText().contains(lastNameWarningExpectedWarning) &&
+                emailWarningWarningField.getText().contains(emailWarningExpectedWarning) &&
+                telephoneWarningField.getText().contains(telephoneWarningExpectedWarning);
+
+
     }
 
 }

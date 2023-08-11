@@ -31,8 +31,7 @@ public class Register extends Base {
         homePage = new HomePage(driver);
         registerPage = new RegisterPage(driver);
         accountSuccessPage = new AccountSuccessPage(driver);
-        homePage.clickOnMyAccount();
-        homePage.clickOnRegister();
+        homePage.navigateToRegisterPage();
     }
 
     @AfterMethod
@@ -44,12 +43,9 @@ public class Register extends Base {
     @Test
     //(priority = 2)
     public void verifyRegisteringWithMandatoryFields() {
-        registerPage.feedFirstNameField(dataProperties.getProperty("firstName"));
-        registerPage.feedLastNameField(dataProperties.getProperty("lastName"));
-        registerPage.feedEmailField(Utilities.generateEmailWithTimeStamp());
-        registerPage.feedTelephoneField(dataProperties.getProperty("telephone"));
-        registerPage.feedPasswordField(properties.getProperty("validPassword"));
-        registerPage.feedConfirmField(properties.getProperty("validPassword"));
+        registerPage.registerUser(dataProperties.getProperty("firstName"),
+                dataProperties.getProperty("lastName"), Utilities.generateEmailWithTimeStamp(),
+                dataProperties.getProperty("telephone"), properties.getProperty("validPassword"));
         registerPage.clickOnAgree();
         registerPage.clickOnContinue();
         String actualHeadingText = accountSuccessPage.retrieveAccountSuccessCreatedHeadingText();
@@ -61,12 +57,9 @@ public class Register extends Base {
     @Test
     //(priority = 3)
     public void verifyRegisteringWithMandatoryWithRadioOptionFields() {
-        registerPage.feedFirstNameField(dataProperties.getProperty("firstName"));
-        registerPage.feedLastNameField(dataProperties.getProperty("lastName"));
-        registerPage.feedEmailField(Utilities.generateEmailWithTimeStamp());
-        registerPage.feedTelephoneField(dataProperties.getProperty("telephone"));
-        registerPage.feedPasswordField(properties.getProperty("validPassword"));
-        registerPage.feedConfirmField(properties.getProperty("validPassword"));
+        registerPage.registerUser(dataProperties.getProperty("firstName"),
+                dataProperties.getProperty("lastName"), Utilities.generateEmailWithTimeStamp(),
+                dataProperties.getProperty("telephone"), properties.getProperty("validPassword"));
         registerPage.newsLetterClick();
         registerPage.clickOnAgree();
         registerPage.clickOnContinue();
@@ -80,12 +73,9 @@ public class Register extends Base {
     @Test
     //(priority = 1)
     public void verifyRegisteringWithMandatoryWithoutPolicy() {
-        registerPage.feedFirstNameField(dataProperties.getProperty("firstName"));
-        registerPage.feedLastNameField(dataProperties.getProperty("lastName"));
-        registerPage.feedEmailField(Utilities.generateEmailWithTimeStamp());
-        registerPage.feedTelephoneField(dataProperties.getProperty("telephone"));
-        registerPage.feedPasswordField(properties.getProperty("validPassword"));
-        registerPage.feedConfirmField(properties.getProperty("validPassword"));
+        registerPage.registerUser(dataProperties.getProperty("firstName"),
+                dataProperties.getProperty("lastName"), Utilities.generateEmailWithTimeStamp(),
+                dataProperties.getProperty("telephone"), properties.getProperty("validPassword"));
         registerPage.clickOnContinue();
 
         String actualErrorMessagePrivacyPolicy = registerPage.retrieveActualErrorMessagePrivacyPolicyField();
@@ -98,14 +88,12 @@ public class Register extends Base {
     //(priority = 4)
     public void verifyRegisteringWithoutAnyFields() {
         registerPage.clickOnContinue();
-        String firstNameWarning = registerPage.retrieveFirstNameWarningField();
-        Assert.assertTrue(firstNameWarning.contains(dataProperties.getProperty("firstNameWarningExpectedWarning")), "First Name Error Warning not Displayed!");
-        String lastNameWarning = registerPage.retrieveLastNameWarningFieldField();
-        Assert.assertTrue(lastNameWarning.contains(dataProperties.getProperty("lastNameWarningExpectedWarning")), "Last Name Error Warning not Displayed!");
-        String emailWarning = registerPage.retrieveEmailWarningWarningFieldField();
-        Assert.assertTrue(emailWarning.contains(dataProperties.getProperty("emailWarningExpectedWarning")), "Email Error Warning not Displayed!");
-        String telephoneWarning = registerPage.retrieveTelephoneWarningField();
-        Assert.assertTrue(telephoneWarning.contains(dataProperties.getProperty("TelephoneWarningExpectedWarning")), "Telephone Error Warning not Displayed!");
+        Assert.assertTrue(registerPage.displayStatusOfAllWarningMessages
+                        (dataProperties.getProperty("firstNameWarningExpectedWarning"),
+                                dataProperties.getProperty("lastNameWarningExpectedWarning"),
+                                dataProperties.getProperty("emailWarningExpectedWarning"),
+                                dataProperties.getProperty("telephoneWarningExpectedWarning")),
+                "Warning Message(s) are not Displayed!");
     }
 
 }
