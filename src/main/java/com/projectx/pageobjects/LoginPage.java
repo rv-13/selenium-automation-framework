@@ -15,9 +15,6 @@ public class LoginPage {
 
     }
 
-    public LoginPage() {
-
-    }
 
     //Page Objects
     @FindBy(id = "input-email")
@@ -28,6 +25,10 @@ public class LoginPage {
 
     @FindBy(xpath = "//input[@value='Login']")
     WebElement loginButton;
+
+
+    @FindBy(xpath = "//div[contains(@class,'alert-dismissible')]")
+    WebElement emailWarningMessageOnLoginPage;
 
     //Actions
     public void sendKeysEmail(String emailText) {
@@ -40,5 +41,10 @@ public class LoginPage {
 
     public void clickOnLoginButton() {
         loginButton.click();
+    }
+
+    public String emailWarningMessageOnLoginPageGetText() {
+        return emailWarningMessageOnLoginPage.getText();
+
     }
 }

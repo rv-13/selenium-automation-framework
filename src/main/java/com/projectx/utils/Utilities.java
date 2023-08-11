@@ -10,6 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 
 public class Utilities {
@@ -28,15 +29,16 @@ public class Utilities {
         return "rv" + timeStamp + "@gmail.com";
     }
 
-    public static Object[][] getTestDataFromExcel(String sheetName) throws FileNotFoundException {
-        File fileExcel = new File(System.getProperty("user.dir") + "src/main/java/com/projectx/testdata/TestData_SeleniumFramework1.xlsx");
+    public static Object[][] getTestDataFromExcel(String sheetName) throws IOException {
+        File fileExcel = new File(System.getProperty("user.dir") + "/src/main/java/com/projectx/testdata/TestData_SeleniumFramework1.xlsx");
         XSSFWorkbook workbook = null;
         try {
             FileInputStream fileInputStreamExcel = new FileInputStream(fileExcel);
-            workbook = new XSSFWorkbook();
+            workbook = new XSSFWorkbook(fileInputStreamExcel);
         } catch (Throwable e) {
             e.printStackTrace();
         }
+
         XSSFSheet sheet = workbook.getSheet(sheetName);
         int rows = sheet.getLastRowNum();
         int cols = sheet.getRow(0).getLastCellNum();
