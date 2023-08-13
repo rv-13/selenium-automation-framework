@@ -3,10 +3,8 @@ package com.projectx.testcases;
 import base.Base;
 import com.projectx.pageobjects.AccountSuccessPage;
 import com.projectx.pageobjects.HomePage;
-import com.projectx.pageobjects.LoginPage;
 import com.projectx.pageobjects.RegisterPage;
 import com.projectx.utils.Utilities;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -15,14 +13,14 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-public class Register extends Base {
+public class RegisterTests extends Base {
 
     public WebDriver driver;
     HomePage homePage;
     RegisterPage registerPage;
     AccountSuccessPage accountSuccessPage;
 
-    public Register() throws IOException {
+    public RegisterTests() throws IOException {
     }
 
     @BeforeMethod

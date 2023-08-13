@@ -3,7 +3,6 @@ package com.projectx.testcases;
 import base.Base;
 import com.projectx.pageobjects.HomePage;
 import com.projectx.pageobjects.SearchPage;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -12,13 +11,13 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-public class Search extends Base {
+public class SearchTests extends Base {
 
     public WebDriver driver;
     SearchPage searchPage;
     HomePage homePage;
 
-    public Search() throws IOException {
+    public SearchTests() throws IOException {
     }
 
     @BeforeMethod

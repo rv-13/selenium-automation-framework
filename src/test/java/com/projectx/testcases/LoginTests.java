@@ -17,14 +17,14 @@ import java.io.IOException;
 import static com.projectx.utils.Utilities.generateTimeStamp;
 import static com.projectx.utils.Utilities.getTestDataFromExcel;
 
-public class Login extends Base {
+public class LoginTests extends Base {
 
     public WebDriver driver;
     LoginPage loginPage;
     HomePage homePage;
     AccountPage accountPage;
 
-    public Login() throws IOException {
+    public LoginTests() throws IOException {
 
     }
 
