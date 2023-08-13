@@ -4,6 +4,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.projectx.utils.ExtentReporter;
+import com.projectx.utils.Utilities;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -12,6 +13,7 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -19,6 +21,7 @@ public class ProjectListeners implements ITestListener {
     ExtentReports extentReports;
     ExtentTest extentTest;
     WebDriver driver;
+    String testName;
 
     @Override
     public void onStart(ITestContext iTestContext) {
@@ -27,20 +30,18 @@ public class ProjectListeners implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        String testName = iTestResult.getName();
+        testName = iTestResult.getName();
         extentTest = extentReports.createTest(testName);
         extentTest.log(Status.INFO, testName + ": Started Executing");
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        String testName = iTestResult.getName();
         extentTest.log(Status.PASS, testName + ": Test Successfully Executed");
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        String testName = iTestResult.getName();
         try {
             driver = (WebDriver) iTestResult.getTestClass().getRealClass().getDeclaredField("driver").get(iTestResult.getInstance());
         } catch (IllegalAccessException e) {
@@ -48,14 +49,7 @@ public class ProjectListeners implements ITestListener {
         } catch (NoSuchFieldException e) {
             throw new RuntimeException(e);
         }
-        File srcScreenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        String destinationScreenshotPath = System.getProperty("user.dir") + "/screenshots/" + testName + ".png";
-        try {
-            FileHandler.copy(srcScreenshot, new File(destinationScreenshotPath));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        extentTest.addScreenCaptureFromPath(destinationScreenshotPath);
+        extentTest.addScreenCaptureFromPath(Utilities.captureScreenshot(driver, testName));
         extentTest.log(Status.INFO, iTestResult.getThrowable());
         extentTest.log(Status.FAIL, testName + ": Got Failed!");
         System.out.println("Screenshot Captured!!");
@@ -63,7 +57,6 @@ public class ProjectListeners implements ITestListener {
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        String testName = iTestResult.getName();
         extentTest.log(Status.SKIP, testName + ": Got Skipped!");
         extentTest.log(Status.INFO, iTestResult.getThrowable());
     }
@@ -78,5 +71,13 @@ public class ProjectListeners implements ITestListener {
     public void onFinish(ITestContext iTestContext) {
         System.out.println("Finished executing Project Tests!");
         extentReports.flush();
+        String extentReportPath = System.getProperty("user.dir") + "/test-output/ExtentReports/extentReport.html";
+        File extentReportFile = new File(extentReportPath);
+        try {
+            Desktop.getDesktop().browse(extentReportFile.toURI());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
