@@ -19,7 +19,7 @@ import static com.projectx.utils.Utilities.getTestDataFromExcel;
 
 public class Login extends Base {
 
-    WebDriver driver;
+    public WebDriver driver;
     LoginPage loginPage;
     HomePage homePage;
     AccountPage accountPage;

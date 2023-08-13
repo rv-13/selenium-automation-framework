@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class Register extends Base {
 
-    WebDriver driver;
+    public WebDriver driver;
     HomePage homePage;
     RegisterPage registerPage;
     AccountSuccessPage accountSuccessPage;

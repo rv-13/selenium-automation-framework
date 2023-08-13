@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class Search extends Base {
 
-    WebDriver driver;
+    public WebDriver driver;
     SearchPage searchPage;
     HomePage homePage;
 
@@ -48,7 +48,7 @@ public class Search extends Base {
 
     }
 
-    @Test
+    @Test(dependsOnMethods = {"verifySearchWithInValidProduct", "verifySearchWithValidProduct"})
     public void verifySearchWithNoProduct() {
         homePage.clickSearchButton();
         Assert.assertTrue(searchPage.retrieveNoProductFoundMessageText().contains(dataProperties.getProperty("noProductSearchActualWarning")));
