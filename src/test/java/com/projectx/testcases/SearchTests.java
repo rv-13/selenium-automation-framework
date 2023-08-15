@@ -47,7 +47,7 @@ public class SearchTests extends Base {
 
     }
 
-    @Test(dependsOnMethods = {"verifySearchWithInValidProduct", "verifySearchWithValidProduct"})
+    @Test(dependsOnMethods = {"verifySearchWithValidProduct"})
     public void verifySearchWithNoProduct() {
         homePage.clickSearchButton();
         Assert.assertTrue(searchPage.retrieveNoProductFoundMessageText().contains(dataProperties.getProperty("noProductSearchActualWarning")));
