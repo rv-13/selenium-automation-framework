@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <listeners>
+        <listener class-name="com.projectx.listeners.ProjectListeners"></listener>
+    </listeners>
+    <test verbose="2" preserve-order="true"
+          name="/Users/ravi/IdeaProjects/selenium-framework/src/test/java/com/projectx/testcases">
+        <classes>
+<!--            <class name="com.projectx.testcases.LoginTests"></class>-->
+<!--            <class name="com.projectx.testcases.RegisterTests"></class>-->
+            <class name="com.projectx.testcases.SearchTests"></class>
+        </classes>
+    </test>
+</suite>
